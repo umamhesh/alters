@@ -1,0 +1,35 @@
+threshold="20"
+
+i=2
+
+result=`df -kh |grep -v "FileSystem" | awk '{ print $5 }' | sed 's/%//g'`
+
+for percent in $result; do
+
+if ((percent > threshold))
+then
+
+partition=`df -kh | head -$i | tail -1| awk '{print $1}'`
+
+echo "$partition at $(hostname -f) is ${percent}% full"
+
+fi
+
+let i=$i+1
+
+done
+
+# #!/bin/bash  
+#  CURRENT=$(df -h  | grep /dev/sda2 | awk '{ print $5}' | sed 's/%//g')  
+#  used=5 
+   
+#  if [ "$CURRENT" -ge "$used" ] ; 
+#  then
+#      echo "fail "
+# else
+#     echo "system memory is safe" $CURRENT
+
+# #    mail -s 'Disk Space Alert' it.subhashpatel@gmail.com << EOF  
+# #  Your root partition remaining free space is critically low. Used: $CURRENT%  
+# #  EOF  
+#  fi
