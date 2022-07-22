@@ -1,0 +1,17 @@
+#!/bin/bash
+
+#nc means netcat 
+
+SERVER_NAME=http://lms.tectoro.com/
+
+status=`nc -v -z $SERVER_NAME  80 2>&1 | grep succeeded | wc -w`
+# status=`nc -v -z dev.novaplus.in 80 2>&1 | grep succeeded | wc -w`
+
+if [ $status -eq 0 ] 
+
+then
+    echo  $SERVER_NAME "server is down"   $status 
+    banner server is down
+else
+   echo " server is up and Running "
+fi
